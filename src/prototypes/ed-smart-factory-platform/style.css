@@ -1,0 +1,1099 @@
+@import "tailwindcss";
+
+/* ==================== 设计令牌 ==================== */
+.ed-factory-platform {
+  --edf-primary: #0ea5e9;
+  --edf-primary-dark: #0284c7;
+  --edf-primary-light: #e0f2fe;
+  --edf-smart: #10b981;
+  --edf-smart-light: #d1fae5;
+  --edf-ai-gradient: linear-gradient(135deg, #06b6d4 0%, #0ea5e9 50%, #10b981 100%);
+  --edf-bg: #f1f5f9;
+  --edf-surface: #ffffff;
+  --edf-sidebar: linear-gradient(180deg, #0c1929 0%, #1a365d 100%);
+  --edf-cockpit-bg: #0f172a;
+  --edf-cockpit-card: rgba(30, 41, 59, 0.85);
+  --edf-border: #e2e8f0;
+  --edf-text: #0f172a;
+  --edf-text-secondary: #64748b;
+  --edf-text-tertiary: #94a3b8;
+  --edf-radius: 8px;
+  --edf-radius-lg: 12px;
+  --edf-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.04);
+  --edf-shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --edf-run: #22c55e;
+  --edf-idle: #94a3b8;
+  --edf-fault: #ef4444;
+  --edf-maint: #f59e0b;
+  --edf-stop: #475569;
+  min-height: 100vh;
+  background: var(--edf-bg);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: var(--edf-text);
+  display: flex;
+}
+
+/* ==================== 侧边栏 ==================== */
+.edf-sidebar {
+  width: 240px;
+  min-height: 100vh;
+  background: var(--edf-sidebar);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.edf-sidebar-brand {
+  padding: 20px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.edf-sidebar-logo {
+  width: 40px;
+  height: 40px;
+  background: var(--edf-ai-gradient);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 800;
+  font-size: 13px;
+  margin-bottom: 10px;
+  letter-spacing: -0.5px;
+}
+
+.edf-sidebar-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.4;
+}
+
+.edf-sidebar-subtitle {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.45);
+  margin-top: 4px;
+  letter-spacing: 0.3px;
+}
+
+.edf-sidebar-nav {
+  flex: 1;
+  padding: 12px 8px;
+}
+
+.edf-nav-group-title {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.8px;
+  padding: 14px 12px 6px;
+}
+
+.edf-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 2px;
+  position: relative;
+}
+
+.edf-nav-item:hover {
+  background: rgba(14, 165, 233, 0.15);
+  color: #fff;
+}
+
+.edf-nav-item--active {
+  background: rgba(14, 165, 233, 0.25);
+  color: #fff;
+}
+
+.edf-nav-item--active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 22px;
+  background: #38bdf8;
+  border-radius: 0 2px 2px 0;
+}
+
+.edf-nav-item--cockpit .edf-nav-icon { color: #38bdf8; }
+
+.edf-nav-icon { font-size: 16px; flex-shrink: 0; }
+
+.edf-nav-badge {
+  margin-left: auto;
+  background: #ef4444;
+  color: #fff;
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.edf-sidebar-footer {
+  padding: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.edf-arch-tag {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.35);
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* ==================== 主区域 ==================== */
+.edf-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.edf-header {
+  height: 56px;
+  background: var(--edf-surface);
+  border-bottom: 1px solid var(--edf-border);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.edf-header-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--edf-text);
+}
+
+.edf-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+
+.edf-content {
+  flex: 1;
+  padding: 24px;
+}
+
+.edf-content--cockpit {
+  padding: 0;
+  background: var(--edf-cockpit-bg);
+}
+
+.edf-page-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.edf-page-desc {
+  font-size: 13px;
+  color: var(--edf-text-secondary);
+  margin-bottom: 20px;
+}
+
+/* ==================== KPI ==================== */
+.edf-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.edf-kpi-grid--6 { grid-template-columns: repeat(6, 1fr); }
+
+.edf-kpi-card {
+  background: var(--edf-surface);
+  border-radius: var(--edf-radius-lg);
+  padding: 16px 18px;
+  box-shadow: var(--edf-shadow);
+  border-left: 4px solid var(--edf-primary);
+  transition: all 0.2s;
+}
+
+.edf-kpi-card:hover {
+  box-shadow: var(--edf-shadow-hover);
+  transform: translateY(-1px);
+}
+
+.edf-kpi-card--smart { border-left-color: var(--edf-smart); }
+
+.edf-kpi-label {
+  font-size: 12px;
+  color: var(--edf-text-tertiary);
+  margin-bottom: 6px;
+}
+
+.edf-kpi-value {
+  font-size: 26px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.edf-kpi-footer {
+  font-size: 11px;
+  color: var(--edf-text-secondary);
+  margin-top: 6px;
+}
+
+/* ==================== 驾驶舱深色风格 ==================== */
+.edf-cockpit-header {
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.edf-cockpit-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.edf-cockpit-tabs {
+  display: flex;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.edf-cockpit-tab {
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.edf-cockpit-tab:hover { color: #fff; }
+
+.edf-cockpit-tab--active {
+  background: rgba(14, 165, 233, 0.3);
+  color: #fff;
+  font-weight: 500;
+}
+
+.edf-cockpit-body { padding: 20px 24px; }
+
+.edf-cockpit-kpi {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.edf-cockpit-kpi-item {
+  background: var(--edf-cockpit-card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 14px 16px;
+  text-align: center;
+}
+
+.edf-cockpit-kpi-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 6px;
+}
+
+.edf-cockpit-kpi-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+
+.edf-cockpit-kpi-value--good { color: #4ade80; }
+.edf-cockpit-kpi-value--warn { color: #fbbf24; }
+.edf-cockpit-kpi-value--bad { color: #f87171; }
+
+/* ==================== 功能区地图 ==================== */
+.edf-zone-map {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.edf-zone-block {
+  background: var(--edf-cockpit-card);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+
+.edf-zone-block::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--edf-primary);
+  opacity: 0.6;
+}
+
+.edf-zone-block:hover {
+  border-color: rgba(56, 189, 248, 0.5);
+  box-shadow: 0 0 20px rgba(14, 165, 233, 0.15);
+  transform: translateY(-2px);
+}
+
+.edf-zone-block--selected {
+  border-color: #38bdf8;
+  box-shadow: 0 0 24px rgba(14, 165, 233, 0.25);
+}
+
+.edf-zone-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.edf-zone-stats {
+  display: flex;
+  gap: 12px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.edf-zone-stat-value {
+  color: #38bdf8;
+  font-weight: 600;
+}
+
+/* ==================== 设备状态 ==================== */
+.edf-equip-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.edf-equip-card {
+  background: var(--edf-surface);
+  border-radius: var(--edf-radius);
+  padding: 14px 16px;
+  box-shadow: var(--edf-shadow);
+  border-left: 4px solid var(--edf-run);
+  transition: all 0.2s;
+}
+
+.edf-equip-card--run { border-left-color: var(--edf-run); }
+.edf-equip-card--idle { border-left-color: var(--edf-idle); }
+.edf-equip-card--fault { border-left-color: var(--edf-fault); background: #fef2f2; }
+.edf-equip-card--maint { border-left-color: var(--edf-maint); }
+.edf-equip-card--stop { border-left-color: var(--edf-stop); }
+
+.edf-equip-name {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.edf-equip-status {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.edf-equip-status--run { color: var(--edf-run); }
+.edf-equip-status--idle { color: var(--edf-idle); }
+.edf-equip-status--fault { color: var(--edf-fault); }
+.edf-equip-status--maint { color: var(--edf-maint); }
+
+.edf-equip-param {
+  font-size: 11px;
+  color: var(--edf-text-secondary);
+  margin-top: 6px;
+}
+
+/* ==================== 图表卡片 ==================== */
+.edf-chart-card {
+  background: var(--edf-surface);
+  border-radius: var(--edf-radius-lg);
+  padding: 20px;
+  box-shadow: var(--edf-shadow);
+  margin-bottom: 20px;
+}
+
+.edf-chart-card--dark {
+  background: var(--edf-cockpit-card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.edf-chart-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.edf-chart-title--light { color: #fff; }
+
+/* ==================== 预警条 ==================== */
+.edf-alert-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+.edf-alert-bar--urgent {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+}
+
+.edf-alert-bar--important {
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: #fcd34d;
+}
+
+.edf-alert-bar--normal {
+  background: rgba(14, 165, 233, 0.15);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  color: #7dd3fc;
+}
+
+/* ==================== 架构层 ==================== */
+.edf-arch-layers {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.edf-arch-layer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 20px;
+  background: var(--edf-surface);
+  border-radius: var(--edf-radius);
+  box-shadow: var(--edf-shadow);
+  border-left: 4px solid var(--edf-primary);
+}
+
+.edf-arch-layer-num {
+  width: 28px;
+  height: 28px;
+  background: var(--edf-primary-light);
+  color: var(--edf-primary-dark);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.edf-arch-layer-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.edf-arch-layer-desc {
+  font-size: 12px;
+  color: var(--edf-text-secondary);
+}
+
+.edf-ai-btn {
+  background: var(--edf-ai-gradient) !important;
+  border: none !important;
+  color: #fff !important;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.3);
+}
+
+.edf-ai-btn:hover {
+  opacity: 0.92;
+}
+
+/* ==================== 两列布局 ==================== */
+.edf-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.edf-three-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+}
+
+/* ==================== AI 标签 ==================== */
+.edf-ai-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  background: var(--edf-smart-light);
+  color: var(--edf-smart);
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* ==================== ANDON ==================== */
+.edf-andon-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.edf-andon-btn {
+  padding: 16px;
+  border-radius: var(--edf-radius);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 2px solid transparent;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.edf-andon-btn:hover {
+  transform: scale(1.02);
+  border-color: currentColor;
+}
+
+.edf-andon-btn--fault { background: #fef2f2; color: #dc2626; }
+.edf-andon-btn--material { background: #fff7ed; color: #ea580c; }
+.edf-andon-btn--quality { background: #faf5ff; color: #9333ea; }
+.edf-andon-btn--process { background: #eff6ff; color: #2563eb; }
+
+.edf-andon-btn--process { background: #eff6ff; color: #2563eb; }
+
+/* ==================== 数字孪生 - 车间平面图 ==================== */
+.edf-twin-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.edf-twin-floor {
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.9) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+  min-height: 420px;
+  position: relative;
+  overflow: hidden;
+}
+
+.edf-twin-floor::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+}
+
+.edf-twin-floor-title {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.edf-twin-floor-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10px;
+  height: 360px;
+  position: relative;
+  z-index: 1;
+}
+
+.edf-twin-zone {
+  border-radius: 8px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.edf-twin-zone::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--zone-color, #38bdf8);
+  opacity: 0.8;
+}
+
+.edf-twin-zone--run { background: rgba(34, 197, 94, 0.12); --zone-color: #22c55e; }
+.edf-twin-zone--warn { background: rgba(245, 158, 11, 0.12); --zone-color: #f59e0b; }
+.edf-twin-zone--fault { background: rgba(239, 68, 68, 0.12); --zone-color: #ef4444; }
+.edf-twin-zone--selected {
+  border-color: #38bdf8;
+  box-shadow: 0 0 24px rgba(56, 189, 248, 0.3);
+  transform: scale(1.02);
+}
+
+.edf-twin-zone-name { font-size: 12px; font-weight: 600; color: #fff; }
+.edf-twin-zone-meta { font-size: 10px; color: rgba(255, 255, 255, 0.45); }
+.edf-twin-zone-output { font-size: 18px; font-weight: 700; color: #38bdf8; }
+
+.edf-twin-agv {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #f59e0b;
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.6);
+  animation: edf-agv-pulse 2s infinite;
+  z-index: 2;
+}
+
+@keyframes edf-agv-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.1); }
+}
+
+.edf-twin-sidepanel {
+  background: var(--edf-cockpit-card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.edf-twin-panel-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.edf-twin-metric-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.edf-twin-metric-val { color: #fff; font-weight: 600; }
+
+.edf-line-mix {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.edf-line-chip {
+  flex: 1;
+  padding: 10px 14px;
+  background: var(--edf-cockpit-card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.edf-line-chip--active {
+  border-color: #38bdf8;
+  background: rgba(14, 165, 233, 0.15);
+}
+
+.edf-line-chip-label { font-size: 11px; color: rgba(255, 255, 255, 0.5); }
+.edf-line-chip-value { font-size: 16px; font-weight: 700; color: #fff; margin-top: 4px; }
+
+.edf-alert-track {
+  background: var(--edf-cockpit-card);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.edf-alert-track-item {
+  display: grid;
+  grid-template-columns: 60px 1fr 80px 70px;
+  gap: 8px;
+  padding: 10px 14px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  align-items: center;
+}
+
+.edf-alert-track-item:last-child { border-bottom: none; }
+
+.edf-env-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.edf-env-item {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+}
+
+.edf-env-label { font-size: 10px; color: rgba(255, 255, 255, 0.45); }
+.edf-env-value { font-size: 18px; font-weight: 700; color: #fff; margin-top: 4px; }
+.edf-env-value--warn { color: #fbbf24; }
+
+/* ==================== SCADA 设备运维 ==================== */
+.edf-scada-tabs { margin-bottom: 20px; }
+
+.edf-equip-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 12px 0;
+}
+
+.edf-param-box {
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 10px 12px;
+  text-align: center;
+}
+
+.edf-param-box--warn { background: #fef3c7; }
+.edf-param-box--fault { background: #fee2e2; }
+
+.edf-param-label { font-size: 10px; color: var(--edf-text-tertiary); }
+.edf-param-value { font-size: 16px; font-weight: 700; margin-top: 2px; }
+
+.edf-oee-waterfall {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  height: 120px;
+  padding: 16px 0;
+}
+
+.edf-oee-bar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.edf-oee-bar-fill {
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+  min-height: 20px;
+  transition: height 0.5s;
+}
+
+.edf-oee-bar-label { font-size: 11px; color: var(--edf-text-secondary); text-align: center; }
+.edf-oee-bar-pct { font-size: 14px; font-weight: 700; }
+
+.edf-maint-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.edf-maint-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px 0;
+  border-left: 2px solid var(--edf-border);
+  margin-left: 8px;
+  padding-left: 20px;
+  position: relative;
+}
+
+.edf-maint-item::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 16px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--edf-primary);
+}
+
+.edf-maint-item--done::before { background: var(--edf-smart); }
+.edf-maint-item--overdue::before { background: var(--edf-fault); }
+
+.edf-ai-predict-card {
+  background: linear-gradient(135deg, #ecfdf5 0%, #e0f2fe 100%);
+  border: 1px solid #a7f3d0;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.edf-ai-predict-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #047857;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.edf-status-legend {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.edf-status-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--edf-text-secondary);
+}
+
+.edf-status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+/* ==================== EMS 能耗 ==================== */
+.edf-ems-tree {
+  background: var(--edf-surface);
+  border-radius: var(--edf-radius-lg);
+  padding: 16px;
+  box-shadow: var(--edf-shadow);
+  margin-bottom: 20px;
+}
+
+.edf-ems-tree-node {
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.edf-ems-tree-node:hover { background: #f1f5f9; }
+.edf-ems-tree-node--active { background: var(--edf-primary-light); color: var(--edf-primary-dark); font-weight: 500; }
+
+.edf-ems-tree-child { padding-left: 24px; }
+
+.edf-ems-product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.edf-ems-product-card {
+  background: var(--edf-surface);
+  border-radius: var(--edf-radius);
+  padding: 16px;
+  box-shadow: var(--edf-shadow);
+  border-top: 3px solid var(--edf-primary);
+}
+
+.edf-ems-product-name { font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+.edf-ems-product-kwh { font-size: 24px; font-weight: 700; color: var(--edf-primary); }
+.edf-ems-product-unit { font-size: 12px; color: var(--edf-text-tertiary); }
+
+.edf-peak-valley {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.edf-peak-card {
+  padding: 14px 16px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.edf-peak-card--peak { background: #fef2f2; border: 1px solid #fecaca; }
+.edf-peak-card--flat { background: #f0f9ff; border: 1px solid #bae6fd; }
+.edf-peak-card--valley { background: #ecfdf5; border: 1px solid #a7f3d0; }
+
+.edf-carbon-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: linear-gradient(90deg, #ecfdf5, #f0fdf4);
+  border-radius: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #bbf7d0;
+}
+
+/* ==================== 数据中台 ==================== */
+.edf-data-topology {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.edf-data-node {
+  background: var(--edf-surface);
+  border-radius: 10px;
+  padding: 16px 12px;
+  text-align: center;
+  box-shadow: var(--edf-shadow);
+  border: 2px solid var(--edf-border);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.edf-data-node:hover {
+  border-color: var(--edf-primary);
+  transform: translateY(-2px);
+}
+
+.edf-data-node--hub {
+  border-color: var(--edf-primary);
+  background: var(--edf-primary-light);
+}
+
+.edf-data-node-icon { font-size: 24px; color: var(--edf-primary); margin-bottom: 8px; }
+.edf-data-node-name { font-size: 12px; font-weight: 600; }
+.edf-data-node-count { font-size: 10px; color: var(--edf-text-tertiary); margin-top: 4px; }
+
+.edf-data-flow-line {
+  position: absolute;
+  height: 2px;
+  background: linear-gradient(90deg, var(--edf-primary), var(--edf-smart));
+  top: 50%;
+  opacity: 0.3;
+}
+
+.edf-governance-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.edf-gov-card {
+  background: var(--edf-surface);
+  border-radius: var(--edf-radius);
+  padding: 14px;
+  box-shadow: var(--edf-shadow);
+  text-align: center;
+}
+
+.edf-gov-value { font-size: 22px; font-weight: 700; color: var(--edf-primary); }
+.edf-gov-label { font-size: 11px; color: var(--edf-text-tertiary); margin-top: 4px; }
+
+.edf-model-registry {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.edf-model-card {
+  border: 1px solid var(--edf-border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.edf-model-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: var(--edf-smart-light);
+  color: var(--edf-smart);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.edf-report-preview {
+  background: #f8fafc;
+  border: 1px dashed var(--edf-border);
+  border-radius: 10px;
+  padding: 20px;
+  min-height: 200px;
+}
+
+.edf-cockpit-row-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 1400px) {
+  .edf-kpi-grid--6, .edf-cockpit-kpi { grid-template-columns: repeat(4, 1fr); }
+  .edf-zone-map { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 1200px) {
+  .edf-kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .edf-two-col, .edf-three-col { grid-template-columns: 1fr; }
+  .edf-equip-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .edf-sidebar { display: none; }
+  .edf-kpi-grid, .edf-cockpit-kpi { grid-template-columns: 1fr 1fr; }
+}

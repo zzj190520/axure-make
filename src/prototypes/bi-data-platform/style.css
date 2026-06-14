@@ -1,0 +1,444 @@
+@import "tailwindcss";
+
+/* ==================== 设计令牌 ==================== */
+.bi-platform {
+  --bi-primary: #1677ff;
+  --bi-primary-light: #e6f4ff;
+  --bi-primary-hover: #4096ff;
+  --bi-success: #52c41a;
+  --bi-success-light: #f6ffed;
+  --bi-warning: #faad14;
+  --bi-warning-light: #fffbe6;
+  --bi-error: #ff4d4f;
+  --bi-error-light: #fff2f0;
+  --bi-bg: #f0f2f5;
+  --bi-surface: #ffffff;
+  --bi-border: #f0f0f0;
+  --bi-border-secondary: #e8e8e8;
+  --bi-text: rgba(0, 0, 0, 0.88);
+  --bi-text-secondary: rgba(0, 0, 0, 0.65);
+  --bi-text-tertiary: rgba(0, 0, 0, 0.45);
+  --bi-radius: 8px;
+  --bi-radius-lg: 12px;
+  --bi-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 2px 8px rgba(0, 0, 0, 0.04);
+  --bi-shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.08);
+  min-height: 100vh;
+  background: var(--bi-bg);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: var(--bi-text);
+}
+
+/* ==================== 顶部导航栏 ==================== */
+.bi-header {
+  height: 56px;
+  background: var(--bi-surface);
+  border-bottom: 1px solid var(--bi-border);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.bi-header-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-right: 32px;
+  flex-shrink: 0;
+}
+
+.bi-header-logo {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, #1677ff 0%, #4096ff 100%);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.bi-header-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--bi-text);
+  white-space: nowrap;
+}
+
+.bi-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: auto;
+}
+
+.bi-header-stats {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.bi-stat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.bi-stat-badge:hover {
+  transform: translateY(-1px);
+}
+
+.bi-stat-badge--pending {
+  background: #fff7e6;
+  color: #d46b08;
+}
+
+.bi-stat-badge--done {
+  background: #f6ffed;
+  color: #389e0d;
+}
+
+.bi-stat-badge--all {
+  background: #f0f5ff;
+  color: #2f54eb;
+}
+
+/* ==================== 主内容区 ==================== */
+.bi-main {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 20px 24px 40px;
+}
+
+/* ==================== Tab 导航 ==================== */
+.bi-tabs-wrap {
+  background: var(--bi-surface);
+  border-radius: var(--bi-radius-lg) var(--bi-radius-lg) 0 0;
+  box-shadow: var(--bi-shadow);
+  margin-bottom: 0;
+  padding: 0 24px;
+}
+
+.bi-tabs-wrap .ant-tabs-nav {
+  margin-bottom: 0 !important;
+}
+
+.bi-tabs-wrap .ant-tabs-tab {
+  padding: 14px 4px !important;
+  font-size: 14px;
+}
+
+.bi-tabs-wrap .ant-tabs-ink-bar {
+  height: 3px !important;
+  border-radius: 3px 3px 0 0;
+}
+
+/* ==================== 内容面板 ==================== */
+.bi-content-panel {
+  background: var(--bi-surface);
+  border-radius: 0 0 var(--bi-radius-lg) var(--bi-radius-lg);
+  box-shadow: var(--bi-shadow);
+  padding: 24px;
+}
+
+/* ==================== 指标卡片 ==================== */
+.bi-metric-card {
+  background: var(--bi-surface);
+  border: 1px solid var(--bi-border);
+  border-radius: var(--bi-radius);
+  padding: 18px 20px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s ease;
+}
+
+.bi-metric-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  border-radius: 4px 0 0 4px;
+}
+
+.bi-metric-card--primary::before { background: var(--bi-primary); }
+.bi-metric-card--success::before { background: var(--bi-success); }
+.bi-metric-card--warning::before { background: var(--bi-warning); }
+.bi-metric-card--error::before { background: var(--bi-error); }
+.bi-metric-card--info::before { background: #722ed1; }
+
+.bi-metric-card:hover {
+  border-color: #d9d9d9;
+  box-shadow: var(--bi-shadow-hover);
+  transform: translateY(-1px);
+}
+
+.bi-metric-label {
+  font-size: 13px;
+  color: var(--bi-text-secondary);
+  margin-bottom: 8px;
+}
+
+.bi-metric-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--bi-text);
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.bi-metric-value--large {
+  font-size: 36px;
+}
+
+.bi-metric-unit {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--bi-text-secondary);
+  margin-left: 4px;
+}
+
+.bi-metric-footer {
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--bi-text-tertiary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bi-metric-compare {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-weight: 500;
+}
+
+.bi-metric-compare--up {
+  color: var(--bi-success);
+}
+
+.bi-metric-compare--down {
+  color: var(--bi-error);
+}
+
+/* ==================== 图表容器 ==================== */
+.bi-chart-card {
+  background: var(--bi-surface);
+  border: 1px solid var(--bi-border);
+  border-radius: var(--bi-radius);
+  padding: 20px;
+}
+
+.bi-chart-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--bi-text);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bi-chart-title::before {
+  content: '';
+  width: 3px;
+  height: 14px;
+  background: var(--bi-primary);
+  border-radius: 2px;
+}
+
+.bi-chart-subtitle {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--bi-text-tertiary);
+  margin-left: 8px;
+}
+
+/* ==================== 表格区域 ==================== */
+.bi-table-wrap {
+  border: 1px solid var(--bi-border);
+  border-radius: var(--bi-radius);
+  overflow: hidden;
+}
+
+.bi-table-wrap .ant-table {
+  border-radius: 0;
+}
+
+.bi-table-wrap .ant-table-thead > tr > th {
+  background: #fafbfc !important;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--bi-text);
+  border-bottom: 1px solid var(--bi-border) !important;
+}
+
+.bi-table-wrap .ant-table-tbody > tr > td {
+  border-bottom: 1px solid #f5f5f5 !important;
+  transition: background 0.15s;
+}
+
+.bi-table-wrap .ant-table-tbody > tr:hover > td {
+  background: #f8faff !important;
+}
+
+/* ==================== 平衡率指示器 ==================== */
+.bi-balance-indicator {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: #fafbfc;
+  border: 1px solid var(--bi-border);
+  border-radius: var(--bi-radius);
+  margin-bottom: 16px;
+}
+
+.bi-balance-bar {
+  flex: 1;
+  height: 8px;
+  background: #f0f0f0;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.bi-balance-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.6s ease;
+}
+
+.bi-balance-label {
+  font-size: 13px;
+  color: var(--bi-text-secondary);
+  white-space: nowrap;
+}
+
+.bi-balance-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--bi-text);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ==================== 瓶颈标识 ==================== */
+.bi-bottleneck-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  background: var(--bi-error-light);
+  color: var(--bi-error);
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.bi-anomaly-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  background: var(--bi-warning-light);
+  color: #d48806;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* ==================== 可编辑表格 ==================== */
+.bi-editable-table .ant-input-number {
+  width: 100%;
+}
+
+.bi-editable-table .editable-cell-value-wrap {
+  padding: 4px 11px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  transition: border-color 0.2s;
+}
+
+.bi-editable-table .editable-cell-value-wrap:hover {
+  border-color: var(--bi-border-secondary);
+}
+
+/* ==================== 筛选面板 ==================== */
+.bi-filter-panel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: #fafbfc;
+  border: 1px solid var(--bi-border);
+  border-radius: var(--bi-radius);
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+/* ==================== 空状态 ==================== */
+.bi-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  color: var(--bi-text-tertiary);
+}
+
+/* ==================== 响应式 ==================== */
+@media (max-width: 768px) {
+  .bi-header {
+    padding: 0 16px;
+  }
+
+  .bi-header-brand {
+    margin-right: 16px;
+  }
+
+  .bi-header-title {
+    font-size: 14px;
+  }
+
+  .bi-header-stats {
+    display: none;
+  }
+
+  .bi-main {
+    padding: 12px 12px 32px;
+  }
+
+  .bi-content-panel {
+    padding: 16px;
+  }
+
+  .bi-metric-value {
+    font-size: 22px;
+  }
+
+  .bi-metric-value--large {
+    font-size: 28px;
+  }
+
+  .bi-tabs-wrap {
+    padding: 0 12px;
+  }
+}
