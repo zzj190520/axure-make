@@ -1,0 +1,1535 @@
+/**
+ * BI数据管理平台（移动端）样式文件
+ * 
+ * 设计规范：
+ * - 适配移动端设备，最大宽度 430px
+ * - 采用渐变背景 + 卡片式布局
+ * - 主色调：蓝色系 (#458EF8)
+ * - 圆角设计：10px/14px/18px 三级体系
+ * - 阴影层次：基础/卡片/Hero 三级阴影
+ * 
+ * 组件命名规范：
+ * - bim- : BI Mobile 的缩写，作为命名空间
+ * - bim-{component} : 基础组件
+ * - bim-{component}--{variant} : 组件变体
+ * - bim-{component}-{element} : 组件子元素
+ */
+
+/* 引入 Tailwind CSS 基础样式 */
+@import "tailwindcss";
+
+/* ==================== 设计令牌（Design Tokens）==================== */
+/**
+ * 设计令牌定义了整个应用的视觉基础变量
+ * 包括：颜色系统、间距、圆角、阴影等
+ * 便于统一管理和主题切换
+ */
+.bi-mobile {
+  /* 主色调系统 */
+  --bi-primary: #458EF8;          /* 品牌主色 - 蓝色 */
+  --bi-primary-light: #E3F2FD;     /* 主色浅版 - 用于背景高亮 */
+  --bi-primary-bg: #F0F7FF;        /* 主色背景 - 用于卡片背景 */
+  --bi-secondary: #6BAFFF;         /* 辅助色 - 较浅的蓝色 */
+  
+  /* 语义色彩系统 */
+  --bi-success: #10B981;           /* 成功/正常状态 - 绿色 */
+  --bi-success-light: #D1FAE5;     /* 成功浅版 */
+  --bi-warning: #F59E0B;           /* 警告状态 - 橙色 */
+  --bi-warning-light: #FEF3C7;     /* 警告浅版 */
+  --bi-error: #EF4444;             /* 错误/异常状态 - 红色 */
+  --bi-error-light: #FEE2E2;       /* 错误浅版 */
+  --bi-info: #8B5CF6;              /* 信息状态 - 紫色 */
+  --bi-info-light: #EDE9FE;        /* 信息浅版 */
+  
+  /* 背景与表面 */
+  --bi-bg: #EEF2FF;                /* 页面背景色 */
+  --bi-bg-mesh: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(69, 142, 248, 0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(107, 175, 255, 0.08) 0%, transparent 50%),
+    linear-gradient(180deg, #F0F7FF 0%, #F8FAFC 40%, #F1F5F9 100%);
+  --bi-surface: #ffffff;           /* 卡片表面色 - 白色 */
+  
+  /* 边框系统 */
+  --bi-border: #E2E8F0;            /* 标准边框 */
+  --bi-border-secondary: #CBD5E1;  /* 次要边框 */
+  
+  /* 文字颜色系统 */
+  --bi-text: #1E40AF;              /* 主文字 - 深蓝 */
+  --bi-text-secondary: #3B5998;    /* 次要文字 */
+  --bi-text-tertiary: #6B7C9E;     /* 辅助文字 */
+  
+  /* 圆角系统 */
+  --bi-radius: 10px;               /* 基础圆角 */
+  --bi-radius-lg: 14px;            /* 大圆角 */
+  --bi-radius-xl: 18px;            /* 特大圆角 */
+  
+  /* 阴影系统 */
+  --bi-shadow: 0 1px 3px rgba(69, 142, 248, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --bi-shadow-card: 0 4px 16px rgba(69, 142, 248, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+  --bi-shadow-hero: 0 8px 24px rgba(69, 142, 248, 0.22);
+  
+  /* 安全区域 */
+  --bi-safe-bottom: env(safe-area-inset-bottom, 0px);
+  
+  /* 布局约束 */
+  max-width: 430px;                /* 最大宽度适配 iPhone 14 Pro Max */
+  margin: 0 auto;                  /* 水平居中 */
+  min-height: 100vh;               /* 最小高度占满视口 */
+  background: var(--bi-bg-mesh);   /* 应用渐变背景 */
+  font-family: 'Fira Sans', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+  color: var(--bi-text);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ==================== 顶部导航栏（Header）==================== */
+/**
+ * 固定顶部导航栏
+ * 包含：返回按钮、Logo、标题、右侧操作按钮（通知等）
+ * 使用渐变背景，带毛玻璃效果
+ */
+.bim-header {
+  height: 52px;
+  background: linear-gradient(135deg, #2C6FE8 0%, #458EF8 45%, #6BAFFF 100%);
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(30, 58, 138, 0.25);
+}
+
+/* 左侧区域：返回按钮 + Logo + 标题 */
+.bim-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+/* 返回按钮 */
+.bim-header-back {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.bim-header-back:active {
+  background: rgba(255, 255, 255, 0.12);  /* 点击反馈 */
+}
+
+/* Logo 容器 */
+.bim-header-logo {
+  width: 30px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(8px);        /* 毛玻璃效果 */
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+/* 标题包装器 */
+.bim-header-title-wrap {
+  min-width: 0;
+}
+
+/* 主标题 */
+.bim-header-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+
+/* 副标题 */
+.bim-header-subtitle {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.65);
+  margin-top: 1px;
+}
+
+/* 右侧区域：操作按钮 */
+.bim-header-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+/* 头部按钮 */
+.bim-header-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  transition: background 0.2s;
+  position: relative;
+}
+
+.bim-header-btn:active {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* 通知红点 */
+.bim-bell-dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 7px;
+  height: 7px;
+  background: #F59E0B;
+  border-radius: 50%;
+  border: 1.5px solid #458EF8;  /* 外圈与背景融合 */
+}
+
+/* ==================== 上下文信息条（Context Bar）==================== */
+/**
+ * 显示当前上下文信息的横向滚动条
+ * 包含：产线选择、日期范围、状态标签等
+ * 支持手势滑动
+ */
+.bim-context-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: var(--bi-surface);
+  border-bottom: 1px solid var(--bi-border);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;  /* iOS 弹性滚动 */
+  position: sticky;
+  top: 52px;
+  z-index: 95;
+}
+
+/* 隐藏滚动条 */
+.bim-context-bar::-webkit-scrollbar {
+  display: none;
+}
+
+/* 上下文标签芯片 */
+.bim-context-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+
+/* 产线标签样式 */
+.bim-context-chip--line {
+  background: linear-gradient(135deg, var(--bi-primary-bg) 0%, var(--bi-primary-light) 100%);
+  color: var(--bi-primary);
+  border-color: rgba(69, 142, 248, 0.15);
+}
+
+/* 日期标签样式 */
+.bim-context-chip--date {
+  background: var(--bi-surface);
+  color: var(--bi-text-secondary);
+  border-color: var(--bi-border);
+}
+
+/* 状态标签样式 */
+.bim-context-chip--status {
+  background: var(--bi-success-light);
+  color: var(--bi-success);
+}
+
+/* 点击反馈 */
+.bim-context-chip:active {
+  transform: scale(0.97);
+  opacity: 0.85;
+}
+
+/* 标签图标 */
+.bim-context-chip-icon {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+/* ==================== 顶部标签栏（Top Tabs）==================== */
+/**
+ * 页面内标签切换组件
+ * 支持滑动选择多个标签
+ */
+.bim-top-tabs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 12px;
+  background: var(--bi-surface);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  position: sticky;
+  top: 52px;
+  z-index: 90;
+  border-bottom: 1px solid var(--bi-border);
+}
+
+/* 偏移版本 - 当存在上下文栏时使用 */
+.bim-top-tabs--offset {
+  top: 92px;  /* 52(header) + 40(context-bar) */
+}
+
+/* 隐藏滚动条 */
+.bim-top-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+/* 标签项 */
+.bim-top-tab-item {
+  padding: 7px 14px;
+  font-size: 12px;
+  color: var(--bi-text-secondary);
+  white-space: nowrap;
+  flex-shrink: 0;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s;
+  font-weight: 500;
+  border-radius: 20px;
+  background: var(--bi-bg);
+  border: 1px solid transparent;
+}
+
+.bim-top-tab-item:active {
+  transform: scale(0.96);
+}
+
+/* 激活状态 */
+.bim-top-tab-item--active {
+  color: #fff;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--bi-primary) 0%, var(--bi-secondary) 100%);
+  border-color: transparent;
+  box-shadow: 0 2px 8px rgba(69, 142, 248, 0.3);
+}
+
+.bim-top-tab-item--active::after {
+  display: none;
+}
+
+/* ==================== 主内容区（Content）==================== */
+/**
+ * 页面主内容区域
+ * 包含所有业务组件
+ */
+.bim-content {
+  padding: 14px 14px calc(76px + var(--bi-safe-bottom));  /* 预留底部导航空间 */
+}
+
+/* ==================== 区块标题（Section Header）==================== */
+/**
+ * 内容区块的标题组件
+ * 包含：图标、标题文字、右侧提示
+ */
+.bim-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  margin-top: 4px;
+}
+
+.bim-section-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--bi-text);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 标题图标容器 */
+.bim-section-title-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  background: var(--bi-primary-light);
+  color: var(--bi-primary);
+}
+
+/* 右侧提示文字 */
+.bim-section-hint {
+  font-size: 11px;
+  color: var(--bi-text-tertiary);
+}
+
+/* ==================== Hero 概览卡片（Hero Card）==================== */
+/**
+ * 页面顶部的核心数据展示卡片
+ * 突出显示关键指标（如产量、达成率等）
+ * 使用渐变背景和光晕效果增强视觉层次
+ */
+.bim-hero-card {
+  background: linear-gradient(135deg, #2C6FE8 0%, #458EF8 50%, #6BAFFF 100%);
+  border-radius: var(--bi-radius-xl);
+  padding: 18px 16px;
+  margin-bottom: 14px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--bi-shadow-hero);
+}
+
+/* 装饰性圆形光晕 - 右上角 */
+.bim-hero-card::before {
+  content: '';
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 120px;
+  height: 120px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+}
+
+/* 装饰性圆形光晕 - 底部 */
+.bim-hero-card::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 40%;
+  width: 80px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+}
+
+/* 顶部区域：主要数据 */
+.bim-hero-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;  /* 确保内容在装饰层之上 */
+}
+
+/* 标签文字 */
+.bim-hero-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.75);
+  margin-bottom: 4px;
+}
+
+/* 数值 */
+.bim-hero-value {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;  /* 等宽数字对齐 */
+  letter-spacing: -1px;
+}
+
+/* 单位 */
+.bim-hero-unit {
+  font-size: 16px;
+  font-weight: 400;
+  opacity: 0.8;
+  margin-left: 2px;
+}
+
+/* 状态徽章 */
+.bim-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(4px);
+}
+
+/* 良好状态 */
+.bim-hero-badge--good {
+  background: rgba(16, 185, 129, 0.25);
+  color: #A7F3D0;
+}
+
+/* 警告状态 */
+.bim-hero-badge--warn {
+  background: rgba(245, 158, 11, 0.25);
+  color: #FDE68A;
+}
+
+/* 底部统计区域 */
+.bim-hero-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  position: relative;
+  z-index: 1;
+}
+
+/* 统计项 */
+.bim-hero-stat {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border-radius: 10px;
+  padding: 10px 8px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.bim-hero-stat-value {
+  font-size: 16px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.bim-hero-stat-label {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.65);
+  margin-top: 2px;
+}
+
+/* ==================== 指标卡片网格（Metric Grid）==================== */
+/**
+ * 通用指标卡片的网格布局容器
+ * 支持3列、2列、单列布局
+ */
+.bim-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.bim-metric-grid--double {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.bim-metric-grid--single {
+  grid-template-columns: 1fr;
+}
+
+/* ==================== 指标卡片（Metric Card）==================== */
+/**
+ * 通用指标展示卡片
+ * 支持多种变体颜色（primary/success/warning/error/info）
+ * 支持特色卡片（跨列展示）
+ */
+.bim-metric-card {
+  background: var(--bi-surface);
+  border-radius: var(--bi-radius-lg);
+  padding: 12px 10px 12px 12px;
+  min-height: 90px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--bi-shadow);
+  transition: all 200ms ease;
+  cursor: pointer;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+/* 悬停效果 */
+.bim-metric-card:hover {
+  box-shadow: var(--bi-shadow-card);
+  transform: translateY(-2px);
+}
+
+/* 点击反馈 */
+.bim-metric-card:active {
+  transform: scale(0.97) translateY(0);
+}
+
+/* 装饰圆点 */
+.bim-metric-card-deco {
+  position: absolute;
+  top: -16px;
+  right: -16px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+/* 主题变体样式 */
+.bim-metric-card--primary { background: linear-gradient(145deg, #fff 60%, var(--bi-primary-bg) 100%); }
+.bim-metric-card--primary .bim-metric-card-deco { background: var(--bi-primary); }
+.bim-metric-card--primary::before { background: var(--bi-primary); }
+
+.bim-metric-card--success { background: linear-gradient(145deg, #fff 60%, #ECFDF5 100%); }
+.bim-metric-card--success .bim-metric-card-deco { background: var(--bi-success); }
+.bim-metric-card--success::before { background: var(--bi-success); }
+
+.bim-metric-card--warning { background: linear-gradient(145deg, #fff 60%, #FFFBEB 100%); }
+.bim-metric-card--warning .bim-metric-card-deco { background: var(--bi-warning); }
+.bim-metric-card--warning::before { background: var(--bi-warning); }
+
+.bim-metric-card--error { background: linear-gradient(145deg, #fff 60%, #FEF2F2 100%); }
+.bim-metric-card--error .bim-metric-card-deco { background: var(--bi-error); }
+.bim-metric-card--error::before { background: var(--bi-error); }
+
+.bim-metric-card--info { background: linear-gradient(145deg, #fff 60%, var(--bi-info-light) 100%); }
+.bim-metric-card--info .bim-metric-card-deco { background: var(--bi-info); }
+.bim-metric-card--info::before { background: var(--bi-info); }
+
+/* 左侧指示条 */
+.bim-metric-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 12px;
+  bottom: 12px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+}
+
+/* 特色卡片（跨列） */
+.bim-metric-card--featured {
+  grid-column: span 2;
+  min-height: 100px;
+  padding: 14px 14px 14px 16px;
+}
+
+/* 图标容器 */
+.bim-metric-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+/* 图标颜色变体 */
+.bim-metric-card--primary .bim-metric-icon { background: var(--bi-primary-light); color: var(--bi-primary); }
+.bim-metric-card--success .bim-metric-icon { background: var(--bi-success-light); color: var(--bi-success); }
+.bim-metric-card--warning .bim-metric-icon { background: var(--bi-warning-light); color: var(--bi-warning); }
+.bim-metric-card--error .bim-metric-icon { background: var(--bi-error-light); color: var(--bi-error); }
+.bim-metric-card--info .bim-metric-icon { background: var(--bi-info-light); color: var(--bi-info); }
+
+/* 标签 */
+.bim-metric-label {
+  font-size: 11px;
+  color: var(--bi-text-tertiary);
+  margin-bottom: 6px;
+  font-weight: 500;
+  line-height: 1.2;
+  padding-right: 28px;
+}
+
+/* 数值 */
+.bim-metric-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--bi-text);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.3px;
+}
+
+/* 大号数值 */
+.bim-metric-value--large {
+  font-size: 34px;
+}
+
+/* 单位 */
+.bim-metric-unit {
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--bi-text-tertiary);
+  margin-left: 1px;
+}
+
+/* 底部信息 */
+.bim-metric-footer {
+  margin-top: 5px;
+  font-size: 10px;
+  color: var(--bi-text-tertiary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  line-height: 1.2;
+}
+
+/* 对比标签 */
+.bim-metric-compare {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-weight: 600;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 10px;
+}
+
+.bim-metric-compare--up {
+  color: var(--bi-success);
+  background: var(--bi-success-light);
+}
+
+.bim-metric-compare--down {
+  color: var(--bi-error);
+  background: var(--bi-error-light);
+}
+
+/* ==================== 操作按钮组（Action Chips）==================== */
+/**
+ * 横向排列的操作按钮组
+ * 支持主按钮和次要按钮变体
+ */
+.bim-action-chips {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.bim-action-chip {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 11px 12px;
+  border-radius: var(--bi-radius);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid var(--bi-border);
+  background: var(--bi-surface);
+  color: var(--bi-text-secondary);
+  box-shadow: var(--bi-shadow);
+}
+
+.bim-action-chip:active {
+  transform: scale(0.97);
+}
+
+/* 主按钮样式 */
+.bim-action-chip--primary {
+  background: linear-gradient(135deg, var(--bi-primary) 0%, var(--bi-secondary) 100%);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 2px 8px rgba(69, 142, 248, 0.25);
+}
+
+.bim-action-chip-icon {
+  font-size: 14px;
+}
+
+/* ==================== 图表容器（Chart Section）==================== */
+/**
+ * ECharts 图表的包装容器
+ * 包含顶部渐变条装饰
+ */
+.bim-chart-section {
+  background: var(--bi-surface);
+  border-radius: var(--bi-radius-lg);
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: var(--bi-shadow);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 顶部渐变装饰条 */
+.bim-chart-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--bi-primary) 0%, var(--bi-secondary) 50%, var(--bi-info) 100%);
+}
+
+/* 图表标题 */
+.bim-chart-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--bi-text);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 标题图标 */
+.bim-chart-title-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  background: linear-gradient(135deg, var(--bi-primary-light) 0%, var(--bi-primary-bg) 100%);
+  color: var(--bi-primary);
+}
+
+/* 副标题/时间范围 */
+.bim-chart-subtitle {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--bi-text-tertiary);
+  margin-left: auto;
+  padding: 2px 8px;
+  background: var(--bi-bg);
+  border-radius: 10px;
+}
+
+/* ==================== 平衡率指示器（Balance Bar）==================== */
+/**
+ * 用于展示生产线平衡率的进度条组件
+ * 包含标签、数值和可视化进度条
+ */
+.bim-balance-bar-wrap {
+  background: var(--bi-surface);
+  border-radius: var(--bi-radius-lg);
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: var(--bi-shadow);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+/* 头部 */
+.bim-balance-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+/* 标签 */
+.bim-balance-label {
+  font-size: 13px;
+  color: var(--bi-text-secondary);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 数值（渐变色） */
+.bim-balance-value {
+  font-size: 24px;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--bi-primary) 0%, var(--bi-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 进度条轨道 */
+.bim-balance-track {
+  height: 10px;
+  background: #E2E8F0;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 进度填充 */
+.bim-balance-fill {
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.6s ease;
+  position: relative;
+}
+
+/* 高光效果 */
+.bim-balance-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 5px 5px 0 0;
+}
+
+/* 刻度标记 */
+.bim-balance-marks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-size: 10px;
+  color: var(--bi-text-tertiary);
+}
+
+/* ==================== 数据卡片列表（Data List）==================== */
+/**
+ * 数据列表容器
+ * 包含头部和列表项
+ */
+.bim-data-list {
+  background: var(--bi-surface);
+  border-radius: var(--bi-radius-lg);
+  box-shadow: var(--bi-shadow);
+  overflow: hidden;
+  margin-bottom: 12px;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+/* 列表头部 */
+.bim-data-list-header {
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--bi-border);
+  background: linear-gradient(180deg, #FAFBFC 0%, var(--bi-surface) 100%);
+}
+
+/* 列表标题 */
+.bim-data-list-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--bi-text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 标题图标 */
+.bim-data-list-title-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  background: var(--bi-primary-light);
+  color: var(--bi-primary);
+}
+
+/* ==================== 数据列表项（List Item）==================== */
+/**
+ * 通用列表项样式
+ * 适用于多种数据展示场景
+ */
+.bim-list-item,
+.bim-station-card,
+.bim-exception-card,
+.bim-env-record {
+  padding: 14px;
+  border-bottom: 1px solid var(--bi-border);
+  background: var(--bi-surface);
+  transition: background-color 200ms ease;
+}
+
+/* 最后一项无底线 */
+.bim-list-item:last-child,
+.bim-station-card:last-child,
+.bim-exception-card:last-child,
+.bim-env-record:last-child {
+  border-bottom: none;
+}
+
+/* 点击反馈 */
+.bim-list-item:active,
+.bim-station-card:active,
+.bim-exception-card:active {
+  background: var(--bi-bg);
+}
+
+/* 顶部区域 */
+.bim-list-item-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+/* 标题 */
+.bim-list-item-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--bi-text);
+}
+
+/* 元信息区域 */
+.bim-list-item-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+/* 元信息项 */
+.bim-list-item-meta-item {
+  font-size: 11px;
+  color: var(--bi-text-tertiary);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 8px;
+  background: var(--bi-bg);
+  border-radius: 6px;
+}
+
+/* ==================== 工位节拍卡片（Station Card）==================== */
+/**
+ * 工位节拍数据展示卡片
+ * 显示单个工位的详细节拍信息
+ */
+/* 顶部区域 */
+.bim-station-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+/* 工位名称 */
+.bim-station-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--bi-text);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 工位编号 */
+.bim-station-id {
+  font-family: 'SF Mono', Monaco, monospace;
+  font-size: 11px;
+  color: var(--bi-primary);
+  background: var(--bi-primary-light);
+  padding: 2px 7px;
+  border-radius: 5px;
+  font-weight: 600;
+}
+
+/* 统计网格 */
+.bim-station-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+/* 统计项 */
+.bim-station-stat {
+  text-align: center;
+  padding: 6px 4px;
+  background: var(--bi-bg);
+  border-radius: 8px;
+}
+
+/* 标签 */
+.bim-station-stat-label {
+  font-size: 10px;
+  color: var(--bi-text-tertiary);
+  margin-bottom: 3px;
+}
+
+/* 数值 */
+.bim-station-stat-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--bi-text);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 状态颜色 */
+.bim-station-stat-value--danger { color: var(--bi-error); }
+.bim-station-stat-value--success { color: var(--bi-success); }
+
+/* 瓶颈工位样式 */
+.bim-station-card--bottleneck {
+  background: linear-gradient(135deg, #fff 0%, #FEF2F2 100%);
+  border-left: 3px solid var(--bi-error);
+}
+
+/* ==================== 标签（Tags）==================== */
+/**
+ * 通用状态标签组件
+ * 支持多种状态类型
+ */
+
+/* 瓶颈标签 */
+.bim-tag-bottleneck {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 8px;
+  background: var(--bi-error-light);
+  color: var(--bi-error);
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* 异常标签 */
+.bim-tag-anomaly {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 8px;
+  background: var(--bi-warning-light);
+  color: #B45309;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* 正常标签 */
+.bim-tag-normal {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 8px;
+  background: var(--bi-success-light);
+  color: var(--bi-success);
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* ==================== 异常卡片（Exception Card）==================== */
+/**
+ * 异常信息展示卡片
+ * 支持多种异常类型（设备故障、物料短缺、品质异常、换型停机）
+ */
+.bim-exception-card {
+  position: relative;
+  padding-left: 16px;
+}
+
+/* 左侧颜色条 */
+.bim-exception-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  border-radius: 4px 0 0 4px;
+}
+
+/* 异常类型颜色 */
+.bim-exception-card--fault::before { background: var(--bi-error); }       /* 设备故障 */
+.bim-exception-card--material::before { background: var(--bi-warning); }  /* 物料短缺 */
+.bim-exception-card--quality::before { background: var(--bi-info); }      /* 品质异常 */
+.bim-exception-card--changeover::before { background: var(--bi-secondary); } /* 换型停机 */
+
+/* 头部区域 */
+.bim-exception-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  gap: 8px;
+}
+
+/* 类型标签 */
+.bim-exception-type {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--bi-text);
+}
+
+/* 类型图标容器 */
+.bim-exception-type-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+/* 图标颜色变体 */
+.bim-exception-card--fault .bim-exception-type-icon { background: var(--bi-error-light); color: var(--bi-error); }
+.bim-exception-card--material .bim-exception-type-icon { background: var(--bi-warning-light); color: var(--bi-warning); }
+.bim-exception-card--quality .bim-exception-type-icon { background: var(--bi-info-light); color: var(--bi-info); }
+.bim-exception-card--changeover .bim-exception-type-icon { background: var(--bi-primary-light); color: var(--bi-primary); }
+
+/* 描述信息 */
+.bim-exception-desc {
+  font-size: 12px;
+  color: var(--bi-text-secondary);
+  margin-bottom: 10px;
+  line-height: 1.5;
+  padding: 8px 10px;
+  background: var(--bi-bg);
+  border-radius: 8px;
+}
+
+/* 底部信息 */
+.bim-exception-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* 元信息标签 */
+.bim-exception-meta {
+  font-size: 11px;
+  color: var(--bi-text-tertiary);
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 8px;
+  background: var(--bi-bg);
+  border-radius: 6px;
+}
+
+/* ==================== 筛选面板（Filter Bar）==================== */
+/**
+ * 横向滚动的筛选标签栏
+ * 支持多种筛选条件切换
+ */
+.bim-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0 12px;
+  margin-bottom: 4px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 隐藏滚动条 */
+.bim-filter-bar::-webkit-scrollbar {
+  display: none;
+}
+
+/* 筛选标签 */
+.bim-filter-label {
+  font-size: 12px;
+  color: var(--bi-text-tertiary);
+  white-space: nowrap;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* 筛选标签项 */
+.bim-filter-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+  background: var(--bi-surface);
+  color: var(--bi-text-secondary);
+  border: 1px solid var(--bi-border);
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: var(--bi-shadow);
+}
+
+/* 点击反馈 */
+.bim-filter-tag:active {
+  transform: scale(0.96);
+}
+
+/* 激活状态 */
+.bim-filter-tag--active {
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 2px 6px rgba(69, 142, 248, 0.2);
+}
+
+/* 各类型激活样式 */
+.bim-filter-tag--fault.bim-filter-tag--active { background: var(--bi-error); }
+.bim-filter-tag--material.bim-filter-tag--active { background: var(--bi-warning); }
+.bim-filter-tag--quality.bim-filter-tag--active { background: var(--bi-info); }
+.bim-filter-tag--changeover.bim-filter-tag--active { background: var(--bi-primary); }
+
+/* 各类型未激活样式 */
+.bim-filter-tag--fault:not(.bim-filter-tag--active) { border-color: rgba(239, 68, 68, 0.3); color: var(--bi-error); }
+.bim-filter-tag--material:not(.bim-filter-tag--active) { border-color: rgba(245, 158, 11, 0.3); color: #B45309; }
+.bim-filter-tag--quality:not(.bim-filter-tag--active) { border-color: rgba(139, 92, 246, 0.3); color: var(--bi-info); }
+.bim-filter-tag--changeover:not(.bim-filter-tag--active) { border-color: rgba(69, 142, 248, 0.3); color: var(--bi-primary); }
+
+/* ==================== 环境数据卡片（Environment Record）==================== */
+/**
+ * 环境监测数据展示卡片
+ * 显示温度、湿度等环境指标
+ */
+.bim-env-record {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 位置信息 */
+.bim-env-record-pos {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--bi-text);
+  margin-bottom: 4px;
+}
+
+/* 辅助信息 */
+.bim-env-record-info {
+  font-size: 11px;
+  color: var(--bi-text-tertiary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 右侧数值区域 */
+.bim-env-record-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* 数值块 */
+.bim-env-value-block {
+  text-align: center;
+  padding: 6px 10px;
+  background: var(--bi-bg);
+  border-radius: 8px;
+  min-width: 48px;
+}
+
+/* 数值 */
+.bim-env-value-num {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--bi-text);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 标签 */
+.bim-env-value-label {
+  font-size: 10px;
+  color: var(--bi-text-tertiary);
+}
+
+/* ==================== 产地选择器弹窗（Line Selector）==================== */
+/**
+ * 产线选择器的弹窗内容
+ * 支持单选选择
+ */
+.bim-line-selector {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* 选项项 */
+.bim-line-option {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--bi-border);
+  font-size: 14px;
+  color: var(--bi-text);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 最后一项无底线 */
+.bim-line-option:last-child {
+  border-bottom: none;
+}
+
+/* 点击反馈 */
+.bim-line-option:active {
+  background: var(--bi-bg);
+}
+
+/* 激活状态 */
+.bim-line-option--active {
+  background: var(--bi-primary-bg);
+  color: var(--bi-primary);
+  font-weight: 600;
+}
+
+/* 勾选图标 */
+.bim-line-option-check {
+  color: var(--bi-primary);
+  font-size: 14px;
+}
+
+/* ==================== 底部导航栏（Bottom Nav）==================== */
+/**
+ * 固定底部导航栏
+ * 支持安全区域适配
+ * 使用毛玻璃效果增强视觉层次
+ */
+.bim-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
+  height: calc(60px + var(--bi-safe-bottom));
+  padding-bottom: var(--bi-safe-bottom);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);        /* 毛玻璃效果 */
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(226, 232, 240, 0.8);
+  display: flex;
+  align-items: flex-start;
+  z-index: 200;
+  box-shadow: 0 -4px 16px rgba(69, 142, 248, 0.06);
+}
+
+/* 导航项 */
+.bim-bottom-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding-top: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+/* 图标容器 */
+.bim-bottom-item-icon-wrap {
+  width: 36px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  transition: all 0.25s;
+}
+
+/* 图标 */
+.bim-bottom-item-icon {
+  font-size: 20px;
+  color: var(--bi-text-tertiary);
+  transition: color 0.2s;
+}
+
+/* 标签 */
+.bim-bottom-item-label {
+  font-size: 10px;
+  color: var(--bi-text-tertiary);
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+/* 激活状态 */
+.bim-bottom-item--active .bim-bottom-item-icon-wrap {
+  background: linear-gradient(135deg, var(--bi-primary-light) 0%, var(--bi-primary-bg) 100%);
+}
+
+.bim-bottom-item--active .bim-bottom-item-icon {
+  color: var(--bi-primary);
+}
+
+.bim-bottom-item--active .bim-bottom-item-label {
+  color: var(--bi-primary);
+  font-weight: 600;
+}
+
+/* 通知徽章 */
+.bim-bottom-badge {
+  position: absolute;
+  top: 4px;
+  right: calc(50% - 20px);
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  background: linear-gradient(135deg, var(--bi-error) 0%, #F87171 100%);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  box-shadow: 0 1px 4px rgba(239, 68, 68, 0.4);
+}
+
+/* ==================== 空状态（Empty State）==================== */
+/**
+ * 数据为空时的展示组件
+ */
+.bim-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 20px;
+  color: var(--bi-text-tertiary);
+}
+
+/* 图标容器 */
+.bim-empty-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--bi-primary-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  color: var(--bi-primary);
+  margin-bottom: 14px;
+  opacity: 0.6;
+}
+
+/* 标题 */
+.bim-empty-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--bi-text-secondary);
+  margin-bottom: 4px;
+}

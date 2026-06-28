@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "updatedAt": "2026-06-25T06:42:42.692Z",
+  "prototypes": [
+    {
+      "id": "item-prototypes-ed-smart-factory-platform",
+      "kind": "item",
+      "title": "ed smart factory platform",
+      "itemKey": "prototypes/ed-smart-factory-platform"
+    },
+    {
+      "id": "item-prototypes-bi-data-platform-mobile",
+      "kind": "item",
+      "title": "bi data platform mobile",
+      "itemKey": "prototypes/bi-data-platform-mobile"
+    }
+  ],
+  "components": [
+    {
+      "id": "item-components-ref-button",
+      "kind": "item",
+      "title": "ref button",
+      "itemKey": "components/ref-button"
+    },
+    {
+      "id": "item-components-ref-line-chart",
+      "kind": "item",
+      "title": "ref line chart",
+      "itemKey": "components/ref-line-chart"
+    },
+    {
+      "id": "item-components-side-menu",
+      "kind": "item",
+      "title": "side menu",
+      "itemKey": "components/side-menu"
+    }
+  ],
+  "docs": [
+    {
+      "id": "item-docs-----------md",
+      "kind": "item",
+      "title": "评审工作台需求文档.md",
+      "itemKey": "docs/评审工作台需求文档.md"
+    },
+    {
+      "id": "item-docs----------md",
+      "kind": "item",
+      "title": "售后诉求一键提取.md",
+      "itemKey": "docs/售后诉求一键提取.md"
+    }
+  ],
+  "canvas": [],
+  "themes": [
+    "antd-new",
+    "firecrawl",
+    "trae-design"
+  ],
+  "data": [
+    "orders"
+  ],
+  "templates": [
+    "lite-prd-template.md",
+    "prd-template.md",
+    "spec-template.md"
+  ]
+}
