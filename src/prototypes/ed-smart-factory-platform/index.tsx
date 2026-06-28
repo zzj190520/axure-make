@@ -1047,7 +1047,9 @@ const DeviceStatusAnalysisView = () => {
     if (typeof window !== 'undefined' && (window as any).__ED_FACTORY_DATA__?.remark) {
       return (window as any).__ED_FACTORY_DATA__.remark;
     }
-    return '';
+    return `超过80：color: #22c55e
+低于80：color: #eab308ff
+`;
   });
 
   // lineOptions, deviceList, statusColors, faultDetailData, alarmDetailData 已从 data.ts 导入
@@ -1168,8 +1170,7 @@ const DeviceStatusAnalysisView = () => {
 
       {/* 原型备注说明这是描述说明框 */}
       <div style={{ background: '#fff', borderRadius: 8, padding: '12px 16px', margin: '12px 0', border: '1px solid #e2e8f0' }}>
-        <div style={{ fontSize: 13, color: '#64748b', marginBottom: 8, fontWeight: 500 }}>原型备注说明
-          这是描述说明的点点滴滴的点点滴滴哒哒哒哒哒哒顶顶顶顶</div>
+        <div style={{ fontSize: 13, color: '#64748b', marginBottom: 8, fontWeight: 500 }}>原型备注说明</div>
         <div style={{ fontSize: 13, color: '#334155', lineHeight: 1.6, whiteSpace: 'pre-wrap' }}>
           {remark}
         </div>
